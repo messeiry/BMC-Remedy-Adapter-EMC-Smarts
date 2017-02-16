@@ -1,0 +1,92 @@
+#!/opt/InCharge9410/SAM/smarts/bin/sm_perl -I /opt/InCharge9410/SAM/smarts/perl/5.16.2 -I /usr/bin/perl
+
+use lib "/usr/local/share/perl15";
+use lib "/usr/share/perl15";
+
+use InCharge::session;
+use SOAP::Lite;
+
+
+# REFERENCE :
+
+
+# unix, bourne shell
+PERL5LIB=/home/path/lib:/usr/another/path/lib; export PERL5LIB
+
+perl -I /home/path/lib -I /usr/another/lib script.pl
+
+
+#!/usr/bin/perl
+use lib "/home/path/lib";
+use lib "/usr/another/lib";
+
+use MyCustomModule;
+
+perl -le 'print foreach @INC'
+
+the output is :
+
+
+#!/opt/InCharge/SAM/smarts/bin/sm_perl -I /usr/local/lib64/perl5 -I /usr/local/share/perl5 -I /usr/lib64/perl5/vendor_perl -I /usr/share/perl5/vendor_perl -I /usr/lib64/perl5 -I /usr/share/perl5
+
+/usr/local/lib64/perl5
+/usr/local/share/perl5
+/usr/lib64/perl5/vendor_perl
+/usr/share/perl5/vendor_perl
+/usr/lib64/perl5
+/usr/share/perl5
+
+
+To clear a Smarts SAM notification using a server tool, complete the following actions:
+
+    Creat a shell script with the following content:
+
+    $SM_HOME/bin/sm_ems -s ${SM_SERVER_NAME} clear ${SM_OBJ_ClassName} "${SM_OBJ_InstanceName}" ${SM_OBJ_EventName} ${SM_OBJ_SourceDomainName}
+
+
+    Save this shell script in the following location:
+
+    <BASEDIR>/SAM/smarts/local/action/server
+
+
+    Create a server tool by following the instructions in the EMC Smarts Service Assurance Manager Configuration Guide. This document is installed with the software and can be found in the following location:
+
+    <BASEDIR>/SAM/smarts/doc/
+
+
+    See solution 35761  on changing context to run the server tool.
+
+
+Create a Notification from the command line:
+
+# RI30861
+# Testing the Automation :
+
+
+./dmctl -s STC-APM01 create Host::fake_host
+
+
+./sm_ems --server=STC-SAM-AGG notify Host FAKE_HOST_1 Down CLI DURABLE 3600 Severity=1 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG notify Host FAKE_Host_2 Down CLI DURABLE 3600 Severity=2 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG notify Host FAKE_Host_3 Down CLI DURABLE 3600 Severity=3 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG notify Host FAKE_Host_4 Down CLI DURABLE 3600 Severity=4 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG notify Host FAKE_Host_5 Down CLI DURABLE 3600 Severity=5 UserDefined5=TEST
+
+
+./sm_ems --server=STC-SAM-AGG notify Router FAKE_ROUTER_1 Down CLI DURABLE 3600 Severity=1 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG notify Router FAKE_ROUTER_2 Down CLI DURABLE 3600 Severity=2 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG notify Router FAKE_ROUTER_3 Down CLI DURABLE 3600 Severity=3 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG notify Router FAKE_ROUTER_4 Down CLI DURABLE 3600 Severity=4 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG notify Router FAKE_ROUTER_5 Down CLI DURABLE 3600 Severity=5 UserDefined5=TEST
+
+
+
+
+
+
+./sm_ems --server=STC-SAM-AGG clear Host FAKE_HOST_1 Down CLI DURABLE 3600 Severity=1 UserDefined5=TEST
+./sm_ems --server=STC-SAM-AGG clear Host FAKE_Host_2 Down CLI DURABLE 3600 Severity=2 UserDefined5=TEST
+
+
+
+./sm_ems --server=STC-SAM-AGG clear Host FAKE_Host_3 Down CLI DURABLE 3600 Severity=3 UserDefined5=TEST
